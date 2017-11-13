@@ -13,6 +13,7 @@ namespace WiresharkApp
     {
         static void Main(string[] args)
         {
+            string lastFile = "";
             Directory.CreateDirectory("Output");
             //Console.Out.WriteLine("Hello");
             Process process = new Process();
@@ -22,29 +23,63 @@ namespace WiresharkApp
             //IMPORTANT: make sure that the tshark exe is is the following path
             //TODO: put a check to make sure it is in the path
             startInfo.FileName = @"C:\Program Files\Wireshark\tshark.exe";
-            startInfo.Arguments = @"-i 2 -a duration:6 -w Output\output.pcap";
+            startInfo.Arguments = @"-i 2 -b duration:6 -b files:5 -w Output\output.pcap";
             process.StartInfo = startInfo;
             process.Start();
-            process.WaitForExit();
+            //process.WaitForExit();
 
-            try
-            {   // Open the text file using a stream reader.
-                using (StreamReader sr = new StreamReader(@"Output\output.pcap"))
-                {
-                    // Read the stream to a string, and write the string to the console.
-                    String line = sr.ReadToEnd();
-                    Console.WriteLine(line);
-                }
-            }
-            catch (Exception e)
+            var directory = new DirectoryInfo("Output");
+            string tempFileName = "";
+            while (true)
             {
-                Console.WriteLine("The file could not be read:");
-                Console.WriteLine(e.Message);
+                //get most recently written file
+                //got this code block from https://stackoverflow.com/questions/1179970/how-to-find-the-most-recent-file-in-a-directory-using-net-and-without-looping
+                try
+                {
+                    var myFile = (from file in directory.GetFiles() orderby file.LastWriteTime descending select file).ElementAt(2);
+                    tempFileName = myFile.Name;
+
+                }
+                catch (ArgumentOutOfRangeException)
+                {
+                    Thread.Sleep(6000);
+                    continue;
+                }
+                //end of credited code block
+
+                //create thread to process tempFile if filename is not the last one seen (linear); otherwise, sleep for a bit
+                if (lastFile.Equals(tempFileName))
+                {
+                    Thread.Sleep(500);
+                    continue;
+                }
+                else
+                {
+                    try
+                    {   // Open the text file using a stream reader.
+                        using (StreamReader sr = new StreamReader(@"Output\" + tempFileName))
+                        {
+                            Console.Out.WriteLine("Opened" + tempFileName);
+                            // Read the stream to a string, and write the string to the console.
+                            String line = sr.ReadToEnd();
+                            Console.WriteLine(line);
+                            sr.Close();
+                            Console.Out.WriteLine("Closed" + tempFileName);
+                        }
+                    }
+                    catch (Exception e)
+                    {
+                        Console.WriteLine("The file could not be read:");
+                        Console.WriteLine(e.Message);
+                    }
+                }
+
+                lastFile = tempFileName;
             }
-            Thread.Sleep(5000);
             //"C:\Program Files\Wireshark\tshark.exe" -i 2 -a duration:5 -w output.pcap
             //"C:\Program Files\Wireshark\tshark.exe" -r output.pcap -T json > output.json
             //C:\Users\Patrick\Source\Repos\CSE4471Project\WiresharkApp\WiresharkApp\Output\output.pcap
+            //Directory.Delete("Output", true);
 
             //create a buffer ring of files
                 //switch files every 5 seconds
