@@ -1,0 +1,84 @@
+﻿<Window x:Class="NetworkMonitor.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:NetworkMonitor"
+        mc:Ignorable="d"
+        MinWidth="670"
+        MinHeight="420"
+        Title="MainWindow" Height="420" Width="670">
+    <Grid>
+        <TabControl>
+            <TabItem Header="Connected Devices">
+                <Grid>
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="*"/>
+                            <RowDefinition Height="100"/>
+                        </Grid.RowDefinitions>
+
+                        <Rectangle Fill="#FFF4F4F5" Margin="6,44,0,0" Stroke="Black"/>
+                        <ScrollViewer Margin="10,69,2,2">
+                            <StackPanel Name="connectedDevicesStack" Margin="0,0,2,0">
+                            </StackPanel>
+                        </ScrollViewer>
+                        <TextBlock TextWrapping="Wrap" Text="Ranking" FontSize="16" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="15,46,0,0" TextDecorations="Underline"/>
+                        <TextBlock TextWrapping="Wrap" Text="Name" FontSize="16" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="72,46,120,0" TextDecorations="Underline"/>
+                        <TextBlock TextWrapping="Wrap" Text="MAC Address" FontSize="16" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0,46,35,0" TextDecorations="Underline"/>
+                        <TextBlock HorizontalAlignment="Center" Margin="0,7,0,0" TextWrapping="Wrap" Text="Connected Devices" VerticalAlignment="Top" FontSize="24" Width="202" Height="32"/>
+
+                        <Rectangle Grid.Column="1" Fill="#FFF4F4F5" Margin="35,44,6,23" Stroke="Black"/>
+                        <Canvas Name="usageGraph" Grid.Column="1" Margin="35,44,6,23">
+                            
+                        </Canvas>
+                        <TextBlock Grid.Column="1" HorizontalAlignment="Center" Margin="35,7,0,0" TextWrapping="Wrap" Text="Usage Graph" VerticalAlignment="Top" FontSize="24" RenderTransformOrigin="0.46,-0.25" Width="137" Height="32"/>
+                        <TextBlock Grid.Column="1" HorizontalAlignment="Center" Margin="0" TextWrapping="Wrap" Text="Time" VerticalAlignment="Bottom" FontSize="16" Width="35" Height="22"/>
+                        <TextBlock Grid.Column="1" HorizontalAlignment="Left" Margin="0" TextWrapping="Wrap" Text="Packets" VerticalAlignment="Center" FontSize="16" RenderTransformOrigin="2.38,6.692" Width="53" Height="22">
+                            <TextBlock.RenderTransform>
+                                <TransformGroup>
+                                    <ScaleTransform/>
+                                    <SkewTransform/>
+                                    <RotateTransform Angle="-90"/>
+                                    <TranslateTransform X="33.109" Y="-230.418"/>
+                                </TransformGroup>
+                            </TextBlock.RenderTransform>
+                        </TextBlock>
+                    </Grid>
+
+                    <Rectangle Fill="#FFF4F4F5" Margin="10,0,10,10" Stroke="Black" VerticalAlignment="Bottom" MinWidth="476" MinHeight="78" Height="78"/>
+                    <TextBlock Name="infoName" HorizontalAlignment="Left" Margin="16,0,0,65" TextWrapping="Wrap" Text="Name:" VerticalAlignment="Bottom" FontSize="14" Height="19"/>
+                    <TextBlock Name="infoTotalPackets" HorizontalAlignment="Left" Margin="16,0,0,29" TextWrapping="Wrap" Text="Number Packets:" VerticalAlignment="Bottom" FontSize="14" Height="19"/>
+                    <TextBlock Name="infoTotalData" HorizontalAlignment="Left" Margin="16,0,0,10" TextWrapping="Wrap" Text="Total Data:" VerticalAlignment="Bottom" FontSize="14" Height="19"/>
+                    <TextBlock Name="infoMacAddress"  HorizontalAlignment="Left" Margin="16,0,0,47" TextWrapping="Wrap" Text="MAC Address:" VerticalAlignment="Bottom" FontSize="14" Height="19"/>
+                    <TextBlock Name="infoPlaceholder" HorizontalAlignment="Center" Margin="105,0,105,68" TextWrapping="Wrap" Text="Click a name or graph line for more info..." VerticalAlignment="Bottom"/>
+                </Grid>
+            </TabItem>
+            <TabItem Header="Live Feed">
+                <Grid>
+                    <TextBlock TextWrapping="Wrap" Text="Live Feed Of Network Traffic" FontSize="24" Margin="0" VerticalAlignment="Top" HorizontalAlignment="Center" Width="298" Height="33"/>
+                    <TextBlock Name="liveTotalPackets" TextWrapping="Wrap" Text="Total Packets: 0" FontSize="16" Margin="10,0,10,54" Height="25" VerticalAlignment="Bottom"/>
+                    <TextBlock Name="liveTotalData" Margin="10,0,10,36" TextWrapping="Wrap" Text="Total Data Across Wire: 0kb" VerticalAlignment="Bottom" FontSize="16" Height="22"/>
+                    <TextBlock Name="liveMostSeenRemote" Margin="10,0,10,18" TextWrapping="Wrap" Text="Most Seen Remote IP: " VerticalAlignment="Bottom" FontSize="16" Height="22"/>
+                    <TextBlock Name="liveMostSeenLocal" Margin="10,0" TextWrapping="Wrap" Text="Most Used Local IP: " VerticalAlignment="Bottom" FontSize="16" Height="22"/>
+                    
+                    <Rectangle Fill="#FFF4F4F5" Margin="8,32,8,91" Stroke="Black"/>
+                    <ScrollViewer Margin="10,57,10,92">
+                        <StackPanel Name="liveFeedStack">
+
+                        </StackPanel>
+                    </ScrollViewer>
+                    <TextBlock Name="liveSourceIP" TextWrapping="Wrap" Text="Source IP" FontSize="16" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="35,34,0,0" TextDecorations="Underline"/>
+                    <TextBlock Name="liveDestIP" TextWrapping="Wrap" Text="Dest IP" FontSize="16" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="160,34,0,0" TextDecorations="Underline"/>
+                    <TextBlock Name="liveLocalPort" TextWrapping="Wrap" Text="Local Port" FontSize="16" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0,34,0,0" TextDecorations="Underline"/>
+                    <TextBlock Name="liveSize" TextWrapping="Wrap" Text="Size (KB)" FontSize="16" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0,34,175,0" TextDecorations="Underline"/>
+                    <TextBlock Name="liveProtocol" TextWrapping="Wrap" Text="Protocol" FontSize="16" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0,34,50,0" TextDecorations="Underline"/>
+                </Grid>
+            </TabItem>
+        </TabControl>
+    </Grid>
+</Window>
