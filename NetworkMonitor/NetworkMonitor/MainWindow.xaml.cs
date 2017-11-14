@@ -65,6 +65,10 @@ namespace NetworkMonitor
             //Setup initial refresh after window loads
             this.ContentRendered += OnContentRendered;
             this.SizeChanged += OnSizeChanged;
+            if (refreshConnectedDevices != null)
+                refreshConnectedDevices.Click += OnUpdateDatabase;
+            if (refreshLiveFeed != null)
+                refreshLiveFeed.Click += OnUpdateDatabase;
         }
 
         /// <summary>
@@ -87,16 +91,21 @@ namespace NetworkMonitor
         }
 
         /// <summary>
+        /// Calls UpdateDatabase(). Used for buttons
+        /// </summary>
+        public void OnUpdateDatabase(object sender, RoutedEventArgs e) { UpdateDatabase(); }
+
+        /// <summary>
         /// Grabs latest data from database, refreshing all dynamic fields
         /// </summary>
-        private void UpdateDatabase()
+        public void UpdateDatabase()
         {
             uint totalPackets;
             double totalData;
             string remoteIP, localIP;
             //Get data on all clients from database
             DatabaseParser.RefreshDatabase(out clients, out packets, out totalPackets, out totalData, out remoteIP, out localIP);
-            
+
             RefreshConnectedDevices();
             RefreshLiveFeed();
 
@@ -109,9 +118,47 @@ namespace NetworkMonitor
         #region Connected Devices Tab
 
         /// <summary>
+        /// Selects the indicated client in the "Connected Devices" tab.
+        /// </summary>
+        /// <param name="client">Client to select</param>
+        public void Info_SelectClient(ClientInfo client)
+        {
+            if (infoName != null)
+                infoName.Text = infoNamePrefix + ((!string.IsNullOrEmpty(client.Name)) ? client.Name : infoNameUnknown);
+            if (infoTotalPackets != null)
+                infoTotalPackets.Text = infoTotalPacketsPrefix + client.PacketCount.ToString("N0");
+            if (infoTotalData != null)
+                infoTotalData.Text = infoTotalDataPrefix + FormatDataText(client.TotalData);
+            if (infoMacAddress != null)
+                infoMacAddress.Text = infoMacAddressPrefix + ((!string.IsNullOrEmpty(client.MacAddress)) ? client.MacAddress : infoMacAddressUnknown);
+            //Ensure our placeholder is cleared
+            if (infoPlaceholder != null)
+                infoPlaceholder.Text = "";
+        }
+
+        /// <summary>
+        /// Selects no client in the "Connected Devices" tab, clearing all text fields.
+        /// </summary>
+        public void Info_DeselectClient()
+        {
+            //Clear all other fields
+            if (infoName != null)
+                infoName.Text = infoNamePrefix;
+            if (infoTotalPackets != null)
+                infoTotalPackets.Text = infoTotalPacketsPrefix;
+            if (infoTotalData != null)
+                infoTotalData.Text = infoTotalDataPrefix;
+            if (infoMacAddress != null)
+                infoMacAddress.Text = infoMacAddressPrefix;
+            //Reset placeholder text
+            if (infoPlaceholder != null)
+                infoPlaceholder.Text = infoPlaceholderText;
+        }
+
+        /// <summary>
         /// Refreshes our "Connected Devices" tab, retrieving latest data from the database and displaying it in graph and list form.
         /// </summary>
-        public void RefreshConnectedDevices()
+        private void RefreshConnectedDevices()
         {
             //Ensure no client is selected
             Info_DeselectClient();
@@ -212,7 +259,7 @@ namespace NetworkMonitor
                     y = (i < client.PacketSamples.Length) ? client.PacketSamples[i] : 0;
 
                     //Scale packet sample based on our sizes
-                    y = ymax - yTickStep * (y / graphPacketTickInterval); 
+                    y = ymax - yTickStep * (y / graphPacketTickInterval);
 
                     //Create point
                     graphPoints.Add(new Point(x, y));
@@ -309,52 +356,56 @@ namespace NetworkMonitor
                 Info_SelectClient(connectedDevicesButtonClients[(Button)sender]);
         }
 
-        /// <summary>
-        /// Selects the indicated client in the "Connected Devices" tab.
-        /// </summary>
-        /// <param name="client">Client to select</param>
-        public void Info_SelectClient(ClientInfo client)
-        {
-            if (infoName != null)
-                infoName.Text = infoNamePrefix + ((!string.IsNullOrEmpty(client.Name)) ? client.Name : infoNameUnknown);
-            if (infoTotalPackets != null)
-                infoTotalPackets.Text = infoTotalPacketsPrefix + client.PacketCount.ToString("N0");
-            if (infoTotalData != null)
-                infoTotalData.Text = infoTotalDataPrefix + FormatDataText(client.TotalData);
-            if (infoMacAddress != null)
-                infoMacAddress.Text = infoMacAddressPrefix + ((!string.IsNullOrEmpty(client.MacAddress)) ? client.MacAddress : infoMacAddressUnknown);
-            //Ensure our placeholder is cleared
-            if (infoPlaceholder != null)
-                infoPlaceholder.Text = "";
-        }
-
-        /// <summary>
-        /// Selects no client in the "Connected Devices" tab, clearing all text fields.
-        /// </summary>
-        public void Info_DeselectClient()
-        {
-            //Clear all other fields
-            if (infoName != null)
-                infoName.Text = infoNamePrefix;
-            if (infoTotalPackets != null)
-                infoTotalPackets.Text = infoTotalPacketsPrefix;
-            if (infoTotalData != null)
-                infoTotalData.Text = infoTotalDataPrefix;
-            if (infoMacAddress != null)
-                infoMacAddress.Text = infoMacAddressPrefix;
-            //Reset placeholder text
-            if (infoPlaceholder != null)
-                infoPlaceholder.Text = infoPlaceholderText;
-        }
-
         #endregion
 
         #region Live Feed
 
         /// <summary>
+        /// Updates our live feed with a new value for total number of packets.
+        /// </summary>
+        /// <param name="totalData">Total number of packets read from wireshark</param>
+        private void Live_UpdateTotalPackets(uint packetCount)
+        {
+            //If input is valid, update text with packet count.
+            if (liveTotalPackets != null)
+                liveTotalPackets.Text = liveTotalPacketsPrefix + packetCount;
+        }
+
+        /// <summary>
+        /// Updates our live feed with a new value for total amount of data sent across wire.
+        /// </summary>
+        /// <param name="totalDataKb">Total amount of data sent through network, in KB</param>
+        private void Live_UpdateTotalData(double totalDataKb)
+        {
+            //If input is valid, update text rounded to 3 decimal places
+            if (liveTotalData != null && totalDataKb > 0)
+                liveTotalData.Text = liveTotalDataPrefix + FormatDataText(totalDataKb);
+        }
+
+        /// <summary>
+        /// Updates our live feed with a new value for most seen remote address
+        /// </summary>
+        /// <param name="newIp">IP address which has been seen the most</param>
+        private void Live_UpdateMostSeenRemoteAddress(string newIp)
+        {
+            if (liveMostSeenRemote != null)
+                liveMostSeenRemote.Text = liveMostSeenRemotePrefix + newIp;
+        }
+
+        /// <summary>
+        /// Updates our live feed with a new value for most seen local device address
+        /// </summary>
+        /// <param name="newIp">IP address of local device which has been seen the most</param>
+        private void Live_UpdateMostSeenLocalDevice(string newIp)
+        {
+            if (liveMostSeenLocal != null)
+                liveMostSeenLocal.Text = liveMostSeenLocalPrefix + newIp;
+        }
+
+        /// <summary>
         /// Refreshes our live feed of traffic with latest packet data we have
         /// </summary>
-        public void RefreshLiveFeed()
+        private void RefreshLiveFeed()
         {
             if (packets == null || liveFeedStack == null)
             {
@@ -418,7 +469,7 @@ namespace NetworkMonitor
             destIpTxt.Margin = new Thickness((liveDestIP.Margin.Left - 10) + (liveDestIPWidth / 2f) - (GetStringWidth(destIpTxt.Text, destIpTxt.FontSize) / 2f), 0, 0, 0);
 
             buttonGrid.Children.Add(destIpTxt);
-            
+
             //Local port text
             TextBlock portTxt = new TextBlock();
             portTxt.TextWrapping = TextWrapping.Wrap;
@@ -430,7 +481,7 @@ namespace NetworkMonitor
             portTxt.Margin = new Thickness((liveLocalPortWidth / 2f) - (GetStringWidth(portTxt.Text, portTxt.FontSize) / 2f), 0, 0, 0);
 
             buttonGrid.Children.Add(portTxt);
-            
+
             //Size text
             TextBlock sizeTxt = new TextBlock();
             sizeTxt.TextWrapping = TextWrapping.Wrap;
@@ -442,7 +493,7 @@ namespace NetworkMonitor
             sizeTxt.Margin = new Thickness(0, 0, (liveSize.Margin.Right - 25) + (liveSizeWidth / 2f) - (GetStringWidth(sizeTxt.Text, sizeTxt.FontSize) / 2f), 0);
 
             buttonGrid.Children.Add(sizeTxt);
-                        
+
             //Protocol text
             TextBlock protocolTxt = new TextBlock();
             protocolTxt.TextWrapping = TextWrapping.Wrap;
@@ -461,50 +512,8 @@ namespace NetworkMonitor
             liveFeedStack.Children.Add(button);
         }
 
-        /// <summary>
-        /// Updates our live feed with a new value for total number of packets.
-        /// </summary>
-        /// <param name="totalData">Total number of packets read from wireshark</param>
-        public void Live_UpdateTotalPackets(uint packetCount)
-        {
-            //If input is valid, update text with packet count.
-            if (liveTotalPackets != null)
-                liveTotalPackets.Text = liveTotalPacketsPrefix + packetCount;
-        }
-
-        /// <summary>
-        /// Updates our live feed with a new value for total amount of data sent across wire.
-        /// </summary>
-        /// <param name="totalDataKb">Total amount of data sent through network, in KB</param>
-        public void Live_UpdateTotalData(double totalDataKb)
-        {
-            //If input is valid, update text rounded to 3 decimal places
-            if (liveTotalData != null && totalDataKb > 0)
-                liveTotalData.Text = liveTotalDataPrefix + FormatDataText(totalDataKb);
-        }
-
-        /// <summary>
-        /// Updates our live feed with a new value for most seen remote address
-        /// </summary>
-        /// <param name="newIp">IP address which has been seen the most</param>
-        public void Live_UpdateMostSeenRemoteAddress(string newIp)
-        {
-            if (liveMostSeenRemote != null)
-                liveMostSeenRemote.Text = liveMostSeenRemotePrefix + newIp;
-        }
-
-        /// <summary>
-        /// Updates our live feed with a new value for most seen local device address
-        /// </summary>
-        /// <param name="newIp">IP address of local device which has been seen the most</param>
-        public void Live_UpdateMostSeenLocalDevice(string newIp)
-        {
-            if (liveMostSeenLocal != null)
-                liveMostSeenLocal.Text = liveMostSeenLocalPrefix + newIp;
-        }
-
         #endregion
-
+        
         /// <summary>
         /// Takes the given data in kilobytes, converts it to the best data unit, then outputs it as a formatted string with 2 decimal places.
         /// </summary>
