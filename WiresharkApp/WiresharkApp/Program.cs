@@ -20,10 +20,11 @@ namespace WiresharkApp
             String tsfilepath = @"""C:\Program Files\Wireshark\tshark.exe""";
 
             //check if wireshark is in expected location
-            if (!File.Exists(@"""C:\Program Files\Wireshark\tshark.exe"""))
+            if (!File.Exists(@"C:\Program Files\Wireshark\tshark.exer"))
             {
                 Console.Out.WriteLine(@"Tshark not in filepath C:\Program Files\Wireshark\tshark.exe. Please enter expected filepath.");
                 tsfilepath = @"""" + Console.ReadLine() + @"""";
+                Console.Out.WriteLine(tsfilepath);
             }
 
             while (true)
@@ -40,7 +41,7 @@ namespace WiresharkApp
                 //process begins and program waits until the process ends (i.e. 100 packets have been captured and data output to JSON)
                 process.Start();
                 process.WaitForExit();
-                
+
                 //TODO: process JSON output into database
             }
             
