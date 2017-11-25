@@ -20,12 +20,15 @@ namespace WiresharkApp
             String tsfilepath = @"""C:\Program Files\Wireshark\tshark.exe""";
 
             //check if wireshark is in expected location
-            if (!File.Exists(@"C:\Program Files\Wireshark\tshark.exer"))
+            if (!File.Exists(@"C:\Program Files\Wireshark\tshark.exe"))
             {
                 Console.Out.WriteLine(@"Tshark not in filepath C:\Program Files\Wireshark\tshark.exe. Please enter expected filepath.");
                 tsfilepath = @"""" + Console.ReadLine() + @"""";
                 Console.Out.WriteLine(tsfilepath);
             }
+
+            DatabaseWriter databaseWriter = new DatabaseWriter();
+            databaseWriter.CreateDatabaseFile("database.sqlite");
 
             while (true)
             {
@@ -36,13 +39,16 @@ namespace WiresharkApp
                 process.StartInfo.FileName = @"cmd.exe";
 
                 //tshark captures 100 packets and outputs the data to a json file
-                process.StartInfo.Arguments = @"/K " + tsfilepath + " -i 2 -c 100 -T json > output.json";
+                process.StartInfo.Arguments = @"/K " + tsfilepath + " -i 1 -c 100 -T json > output.json";
 
                 //process begins and program waits until the process ends (i.e. 100 packets have been captured and data output to JSON)
                 process.Start();
                 process.WaitForExit();
 
                 //TODO: process JSON output into database
+                JsonPacketParser jsonPacketParser = new JsonPacketParser();
+                List<Packet> packets = jsonPacketParser.ParseJson(File.ReadAllText("output.json"));
+                databaseWriter.WritePackets(packets);
             }
             
             //Console.Out.WriteLine(process.StandardOutput.ReadToEnd());
@@ -143,5 +149,7 @@ namespace WiresharkApp
             //run constant process that looks for most recent file; if not yet seen, copy it to new file and pass into new thread that processes json into database
                 //if file already seen, then wait for half second before checking again*/
         }
+
+
     }
 }

@@ -28,3 +28,6 @@ C:\Users\tim\Dropbox\School Files\9_AU 2017\CSE 4471\Project\NetworkMonitor\Netw
 C:\Users\tim\Dropbox\School Files\9_AU 2017\CSE 4471\Project\NetworkMonitor\NetworkMonitor\obj\Debug\NetworkMonitor.csproj.CoreCompileInputs.cache
 C:\Users\tim\Dropbox\School Files\9_AU 2017\CSE 4471\Project\NetworkMonitor\NetworkMonitor\obj\Debug\NetworkMonitor.exe
 C:\Users\tim\Dropbox\School Files\9_AU 2017\CSE 4471\Project\NetworkMonitor\NetworkMonitor\obj\Debug\NetworkMonitor.pdb
+C:\Users\Alex Williams\Source\Repos\CSE4471Project\NetworkMonitor\NetworkMonitor\bin\Debug\NetworkMonitor.exe.config
+C:\Users\Alex Williams\Source\Repos\CSE4471Project\NetworkMonitor\NetworkMonitor\obj\Debug\NetworkMonitor.exe
+C:\Users\Alex Williams\Source\Repos\CSE4471Project\NetworkMonitor\NetworkMonitor\obj\Debug\NetworkMonitor.pdb

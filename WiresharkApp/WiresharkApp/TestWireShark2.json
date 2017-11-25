@@ -1,0 +1,150 @@
+[
+  {
+    "_index": "packets-2017-11-23",
+    "_type": "pcap_file",
+    "_score": null,
+    "_source": {
+      "layers": {
+        "frame": {
+          "frame.interface_id": "0",
+          "frame.interface_id_tree": {
+            "frame.interface_name": "\\Device\\NPF_{F5FFB30C-46B1-44C8-BF4B-930EFD421EF0}"
+          },
+          "frame.encap_type": "1",
+          "frame.time": "Nov 23, 2017 02:05:47.869903000 Eastern Standard Time",
+          "frame.offset_shift": "0.000000000",
+          "frame.time_epoch": "1511420747.869903000",
+          "frame.time_delta": "0.000000000",
+          "frame.time_delta_displayed": "0.000000000",
+          "frame.time_relative": "0.000000000",
+          "frame.number": "1",
+          "frame.len": "938",
+          "frame.cap_len": "938",
+          "frame.marked": "0",
+          "frame.ignored": "0",
+          "frame.protocols": "eth:ethertype:ip:tcp:http",
+          "frame.coloring_rule.name": "HTTP",
+          "frame.coloring_rule.string": "http || tcp.port == 80 || http2"
+        },
+        "eth": {
+          "eth.dst": "dc:ef:09:e1:2e:41",
+          "eth.dst_tree": {
+            "eth.dst_resolved": "Netgear_e1:2e:41",
+            "eth.addr": "dc:ef:09:e1:2e:41",
+            "eth.addr_resolved": "Netgear_e1:2e:41",
+            "eth.lg": "0",
+            "eth.ig": "0"
+          },
+          "eth.src": "94:de:80:ad:fd:0a",
+          "eth.src_tree": {
+            "eth.src_resolved": "Giga-Byt_ad:fd:0a",
+            "eth.addr": "94:de:80:ad:fd:0a",
+            "eth.addr_resolved": "Giga-Byt_ad:fd:0a",
+            "eth.lg": "0",
+            "eth.ig": "0"
+          },
+          "eth.type": "0x00000800"
+        },
+        "ip": {
+          "ip.version": "4",
+          "ip.hdr_len": "20",
+          "ip.dsfield": "0x00000000",
+          "ip.dsfield_tree": {
+            "ip.dsfield.dscp": "0",
+            "ip.dsfield.ecn": "0"
+          },
+          "ip.len": "924",
+          "ip.id": "0x00004d9a",
+          "ip.flags": "0x00000002",
+          "ip.flags_tree": {
+            "ip.flags.rb": "0",
+            "ip.flags.df": "1",
+            "ip.flags.mf": "0"
+          },
+          "ip.frag_offset": "0",
+          "ip.ttl": "128",
+          "ip.proto": "6",
+          "ip.checksum": "0x00000000",
+          "ip.checksum.status": "2",
+          "ip.src": "192.168.1.65",
+          "ip.addr": "192.168.1.65",
+          "ip.src_host": "192.168.1.65",
+          "ip.host": "192.168.1.65",
+          "ip.dst": "52.223.241.5",
+          "ip.addr": "52.223.241.5",
+          "ip.dst_host": "52.223.241.5",
+          "ip.host": "52.223.241.5",
+          "Source GeoIP: Unknown": "",
+          "Destination GeoIP: Unknown": ""
+        },
+        "tcp": {
+          "tcp.srcport": "54623",
+          "tcp.dstport": "80",
+          "tcp.port": "54623",
+          "tcp.port": "80",
+          "tcp.stream": "0",
+          "tcp.len": "884",
+          "tcp.seq": "1",
+          "tcp.nxtseq": "885",
+          "tcp.ack": "1",
+          "tcp.hdr_len": "20",
+          "tcp.flags": "0x00000018",
+          "tcp.flags_tree": {
+            "tcp.flags.res": "0",
+            "tcp.flags.ns": "0",
+            "tcp.flags.cwr": "0",
+            "tcp.flags.ecn": "0",
+            "tcp.flags.urg": "0",
+            "tcp.flags.ack": "1",
+            "tcp.flags.push": "1",
+            "tcp.flags.reset": "0",
+            "tcp.flags.syn": "0",
+            "tcp.flags.fin": "0",
+            "tcp.flags.str": "\u00c2\u00b7\u00c2\u00b7\u00c2\u00b7\u00c2\u00b7\u00c2\u00b7\u00c2\u00b7\u00c2\u00b7AP\u00c2\u00b7\u00c2\u00b7\u00c2\u00b7"
+          },
+          "tcp.window_size_value": "16425",
+          "tcp.window_size": "16425",
+          "tcp.window_size_scalefactor": "-1",
+          "tcp.checksum": "0x0000eb5c",
+          "tcp.checksum.status": "2",
+          "tcp.urgent_pointer": "0",
+          "tcp.analysis": {
+            "tcp.analysis.bytes_in_flight": "884",
+            "tcp.analysis.push_bytes_sent": "884"
+          },
+          "tcp.payload": "47:45:54:20:2f:76:31:2f:70:6c:61:79:6c:69:73:74:2f:43:70:41:44:63:6c:4e:46:52:76:5a:31:33:50:31:57:58:6d:30:47:63:59:75:71:6e:45:71:67:62:71:67:71:35:4b:2d:4a:79:5a:6e:54:52:79:66:38:71:70:78:31:76:51:54:48:4b:31:72:52:6a:37:42:6f:6f:73:4b:67:32:69:52:6e:68:5f:45:35:31:4e:71:52:44:55:31:64:71:66:30:72:62:44:41:46:61:59:46:45:6f:75:5a:58:42:78:55:61:47:53:5a:6d:50:4e:73:36:77:49:7a:68:58:69:6b:65:4e:62:59:6a:50:59:4d:45:36:39:70:6c:53:5f:62:41:74:63:46:30:61:2d:54:78:68:54:30:70:68:32:51:30:39:30:61:46:51:57:38:37:37:32:77:65:4c:6f:53:67:76:31:45:5a:72:75:48:71:49:51:56:72:70:6f:4b:51:35:43:55:6a:4c:74:49:4b:46:31:4a:58:70:59:73:79:71:63:37:46:2d:75:4e:4a:65:79:6a:73:68:45:61:7a:4e:51:57:70:64:48:75:43:64:74:53:48:4d:34:35:48:6d:67:43:6b:43:56:77:6f:37:6e:61:66:67:55:33:48:72:57:59:6b:37:31:70:43:4f:4c:61:39:55:49:6e:44:66:55:4c:6b:5f:7a:4d:5f:6c:51:4b:63:72:39:2d:4a:4a:4e:2d:6c:39:73:53:52:46:6b:51:74:67:2d:73:47:52:79:6d:6d:4a:58:31:6a:51:59:5f:5a:50:42:46:56:31:44:30:44:5a:59:6e:37:4f:4b:72:38:4d:6e:51:69:4f:58:75:58:4f:6b:66:72:58:35:39:4f:49:6e:2d:65:31:4d:4a:77:47:47:65:68:75:62:53:68:32:6f:75:4e:39:49:42:58:30:44:46:38:57:49:71:6a:51:55:57:59:39:63:62:4c:42:4f:4a:6a:58:69:6f:6e:5a:6b:4d:66:35:4e:65:31:6c:4d:59:5a:34:58:47:57:6e:74:4f:41:72:33:6b:33:75:6f:34:6f:6d:6b:42:68:69:79:64:43:78:41:47:75:32:66:51:66:4c:45:2d:69:74:2d:42:38:4b:75:63:4f:38:4a:43:53:56:32:39:42:45:70:37:42:4d:6b:33:79:34:41:6c:47:6c:75:4c:72:79:4b:44:6e:50:4a:36:46:45:75:33:79:31:54:45:39:6b:73:39:77:79:7a:75:43:77:73:54:68:6b:74:6d:6c:43:66:6d:50:66:79:75:6e:77:70:6b:4c:79:30:32:65:68:71:6e:59:6d:4a:72:78:44:64:37:4c:54:7a:57:70:49:6d:45:6d:4c:6b:6e:38:62:78:49:51:4f:58:64:4c:59:56:76:4a:4d:37:2d:4b:76:6b:61:39:49:6c:52:49:41:42:6f:4d:64:69:6a:53:79:4f:43:36:6f:66:43:4f:6b:38:35:6c:2e:6d:33:75:38:20:48:54:54:50:2f:31:2e:31:0d:0a:48:6f:73:74:3a:20:76:69:64:65:6f:2d:77:65:61:76:65:72:2e:69:61:64:30:33:2e:68:6c:73:2e:74:74:76:6e:77:2e:6e:65:74:0d:0a:43:6f:6e:6e:65:63:74:69:6f:6e:3a:20:6b:65:65:70:2d:61:6c:69:76:65:0d:0a:55:73:65:72:2d:41:67:65:6e:74:3a:20:4d:6f:7a:69:6c:6c:61:2f:35:2e:30:20:28:57:69:6e:64:6f:77:73:20:4e:54:20:36:2e:31:3b:20:57:69:6e:36:34:3b:20:78:36:34:29:20:41:70:70:6c:65:57:65:62:4b:69:74:2f:35:33:37:2e:33:36:20:28:4b:48:54:4d:4c:2c:20:6c:69:6b:65:20:47:65:63:6b:6f:29:20:43:68:72:6f:6d:65:2f:36:32:2e:30:2e:33:32:30:32:2e:39:34:20:53:61:66:61:72:69:2f:35:33:37:2e:33:36:0d:0a:41:63:63:65:70:74:3a:20:2a:2f:2a:0d:0a:41:63:63:65:70:74:2d:45:6e:63:6f:64:69:6e:67:3a:20:67:7a:69:70:2c:20:64:65:66:6c:61:74:65:0d:0a:41:63:63:65:70:74:2d:4c:61:6e:67:75:61:67:65:3a:20:65:6e:2d:55:53:2c:65:6e:3b:71:3d:30:2e:39:0d:0a:0d:0a"
+        },
+        "http": {
+          " [truncated]GET \/v1\/playlist\/CpADclNFRvZ13P1WXm0GcYuqnEqgbqgq5K-JyZnTRyf8qpx1vQTHK1rRj7BoosKg2iRnh_E51NqRDU1dqf0rbDAFaYFEouZXBxUaGSZmPNs6wIzhXikeNbYjPYME69plS_bAtcF0a-TxhT0ph2Q090aFQW8772weLoSgv1EZruHqIQVrpoKQ5CUjLtIKF1JXpYsyqc7F-uNJeyjshE": {
+            "_ws.expert": {
+              "http.chat": "",
+              "_ws.expert.message": "GET \/v1\/playlist\/CpADclNFRvZ13P1WXm0GcYuqnEqgbqgq5K-JyZnTRyf8qpx1vQTHK1rRj7BoosKg2iRnh_E51NqRDU1dqf0rbDAFaYFEouZXBxUaGSZmPNs6wIzhXikeNbYjPYME69plS_bAtcF0a-TxhT0ph2Q090aFQW8772weLoSgv1EZruHqIQVrpoKQ5CUjLtIKF1JXpYsyqc7F-uNJeyjshEazNQWpdHuCdt",
+              "_ws.expert.severity": "2097152",
+              "_ws.expert.group": "33554432"
+            },
+            "http.request.method": "GET",
+            "http.request.uri": "\/v1\/playlist\/CpADclNFRvZ13P1WXm0GcYuqnEqgbqgq5K-JyZnTRyf8qpx1vQTHK1rRj7BoosKg2iRnh_E51NqRDU1dqf0rbDAFaYFEouZXBxUaGSZmPNs6wIzhXikeNbYjPYME69plS_bAtcF0a-TxhT0ph2Q090aFQW8772weLoSgv1EZruHqIQVrpoKQ5CUjLtIKF1JXpYsyqc7F-uNJeyjshEazNQWpdHuCdtSHM45HmgCkCVwo7nafgU3HrWYk71pCOLa9UInDfULk_zM_lQKcr9-JJN-l9sSRFkQtg-sGRymmJX1jQY_ZPBFV1D0DZYn7OKr8MnQiOXuXOkfrX59OIn-e1MJwGGehubSh2ouN9IBX0DF8WIqjQUWY9cbLBOJjXionZkMf5Ne1lMYZ4XGWntOAr3k3uo4omkBhiydCxAGu2fQfLE-it-B8KucO8JCSV29BEp7BMk3y4AlGluLryKDnPJ6FEu3y1TE9ks9wyzuCwsThktmlCfmPfyunwpkLy02ehqnYmJrxDd7LTzWpImEmLkn8bxIQOXdLYVvJM7-Kvka9IlRIABoMdijSyOC6ofCOk85l.m3u8",
+            "http.request.version": "HTTP\/1.1"
+          },
+          "http.host": "video-weaver.iad03.hls.ttvnw.net",
+          "http.request.line": "Host: video-weaver.iad03.hls.ttvnw.net\r\n",
+          "http.connection": "keep-alive",
+          "http.request.line": "Connection: keep-alive\r\n",
+          "http.user_agent": "Mozilla\/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit\/537.36 (KHTML, like Gecko) Chrome\/62.0.3202.94 Safari\/537.36",
+          "http.request.line": "User-Agent: Mozilla\/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit\/537.36 (KHTML, like Gecko) Chrome\/62.0.3202.94 Safari\/537.36\r\n",
+          "http.accept": "*\/*",
+          "http.request.line": "Accept: *\/*\r\n",
+          "http.accept_encoding": "gzip, deflate",
+          "http.request.line": "Accept-Encoding: gzip, deflate\r\n",
+          "http.accept_language": "en-US,en;q=0.9",
+          "http.request.line": "Accept-Language: en-US,en;q=0.9\r\n",
+          "\\r\\n": "",
+          "http.request.full_uri": "http:\/\/video-weaver.iad03.hls.ttvnw.net\/v1\/playlist\/CpADclNFRvZ13P1WXm0GcYuqnEqgbqgq5K-JyZnTRyf8qpx1vQTHK1rRj7BoosKg2iRnh_E51NqRDU1dqf0rbDAFaYFEouZXBxUaGSZmPNs6wIzhXikeNbYjPYME69plS_bAtcF0a-TxhT0ph2Q090aFQW8772weLoSgv1EZruHqIQVrpoKQ5CUjLtIKF1JXpYsyqc7F-uNJeyjshEazNQWpdHuCdtSHM45HmgCkCVwo7nafgU3HrWYk71pCOLa9UInDfULk_zM_lQKcr9-JJN-l9sSRFkQtg-sGRymmJX1jQY_ZPBFV1D0DZYn7OKr8MnQiOXuXOkfrX59OIn-e1MJwGGehubSh2ouN9IBX0DF8WIqjQUWY9cbLBOJjXionZkMf5Ne1lMYZ4XGWntOAr3k3uo4omkBhiydCxAGu2fQfLE-it-B8KucO8JCSV29BEp7BMk3y4AlGluLryKDnPJ6FEu3y1TE9ks9wyzuCwsThktmlCfmPfyunwpkLy02ehqnYmJrxDd7LTzWpImEmLkn8bxIQOXdLYVvJM7-Kvka9IlRIABoMdijSyOC6ofCOk85l.m3u8",
+          "http.request": "1",
+          "http.request_number": "1",
+          "http.response_in": "9"
+        }
+      }
+    }
+  }
+]
