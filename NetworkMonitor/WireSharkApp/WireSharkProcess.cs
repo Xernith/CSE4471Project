@@ -9,9 +9,9 @@ using System.Threading.Tasks;
 
 namespace WiresharkApp
 {
-    class Program
+    public class WiresharkProcess
     {
-        static void Main(string[] args)
+        public void StartWireShark()
         {
 
             // ******* EVERYTHING FROM SIMPLE WIRSEHARK TO JSON TO DATABASE PROGRAM

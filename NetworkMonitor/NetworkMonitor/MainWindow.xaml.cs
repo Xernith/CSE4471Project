@@ -2,10 +2,12 @@
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
+using System.Threading;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
 using System.Windows.Shapes;
+using WiresharkApp;
 
 namespace NetworkMonitor
 {
@@ -58,9 +60,14 @@ namespace NetworkMonitor
         //Button, and corresponding client for each button
         private Dictionary<Button, ClientInfo> connectedDevicesButtonClients = new Dictionary<Button, ClientInfo>();
 
+        private WiresharkProcess wiresharkProcess = new WiresharkProcess();
+        
         public MainWindow()
         {
             InitializeComponent();
+
+            Thread wiresharkThread = new Thread(wiresharkProcess.StartWireShark);
+            wiresharkThread.Start();
 
             //Setup initial refresh after window loads
             this.ContentRendered += OnContentRendered;

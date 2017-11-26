@@ -2,9 +2,6 @@
 using System.Collections.Generic;
 using System.Data.SQLite;
 using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace WiresharkApp
 {
@@ -28,7 +25,7 @@ namespace WiresharkApp
                 }
 				catch (IOException e)
                 {
-
+                    Console.WriteLine("Failed to delete file");
                 }
             }
             SQLiteConnection.CreateFile(databasePath);
