@@ -35,15 +35,16 @@ namespace WiresharkApp
                 //begin a process for tshark to run in a separate command terminal
                 Process process = new Process();
                 process.StartInfo.CreateNoWindow = false;
-                process.StartInfo.WindowStyle = ProcessWindowStyle.Normal;
+                process.StartInfo.WindowStyle = ProcessWindowStyle.Hidden;
                 process.StartInfo.FileName = @"cmd.exe";
 
                 //tshark captures 100 packets and outputs the data to a json file
-                process.StartInfo.Arguments = @"/K " + tsfilepath + " -i 1 -c 100 -T json > output.json";
+                process.StartInfo.Arguments = @"/C " + tsfilepath + " -i 1 -c 100 -T json > output.json";
 
                 //process begins and program waits until the process ends (i.e. 100 packets have been captured and data output to JSON)
                 process.Start();
                 process.WaitForExit();
+                process.Dispose();
 
                 //TODO: process JSON output into database
                 JsonPacketParser jsonPacketParser = new JsonPacketParser();
