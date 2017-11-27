@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Data.SQLite;
 using System.IO;
+using System.Configuration;
 
 namespace WiresharkApp
 {
@@ -16,7 +17,7 @@ namespace WiresharkApp
 
         public void CreateDatabaseFile(string databasePath)
         {
-            sqliteConnection.ConnectionString = "DataSource=" + databasePath;
+            sqliteConnection.ConnectionString = ConfigurationManager.ConnectionStrings["SQLiteConnectionString"].ConnectionString;
             if (File.Exists(databasePath))
             {
                 try

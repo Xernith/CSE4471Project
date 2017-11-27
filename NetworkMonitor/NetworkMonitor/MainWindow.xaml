@@ -64,8 +64,8 @@
                     <TextBlock TextWrapping="Wrap" Text="Live Feed Of Network Traffic" FontSize="24" Margin="0" VerticalAlignment="Top" HorizontalAlignment="Center" Width="298" Height="33"/>
                     <TextBlock Name="liveTotalPackets" TextWrapping="Wrap" Text="Total Packets: 0" FontSize="16" Margin="10,0,10,54" Height="25" VerticalAlignment="Bottom"/>
                     <TextBlock Name="liveTotalData" Margin="10,0,10,36" TextWrapping="Wrap" Text="Total Data Across Wire: 0kb" VerticalAlignment="Bottom" FontSize="16" Height="22"/>
-                    <TextBlock Name="liveMostSeenRemote" Margin="10,0,10,18" TextWrapping="Wrap" Text="Most Seen Remote IP: " VerticalAlignment="Bottom" FontSize="16" Height="22"/>
-                    <TextBlock Name="liveMostSeenLocal" Margin="10,0" TextWrapping="Wrap" Text="Most Used Local IP: " VerticalAlignment="Bottom" FontSize="16" Height="22"/>
+                    <TextBlock Name="liveMostSeenSource" Margin="10,0,10,18" TextWrapping="Wrap" Text="Most Seen Source IP: " VerticalAlignment="Bottom" FontSize="16" Height="22"/>
+                    <TextBlock Name="liveMostSeenDestination" Margin="10,0" TextWrapping="Wrap" Text="Most Used Destination IP: " VerticalAlignment="Bottom" FontSize="16" Height="22"/>
                     
                     <Rectangle Fill="#FFF4F4F5" Margin="8,32,8,91" Stroke="Black"/>
                     <ScrollViewer Margin="10,57,10,92">

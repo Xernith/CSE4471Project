@@ -57,7 +57,7 @@ namespace WiresharkApp
             {
                 return "ARP";
             }
-            return "N/A";
+            return "UNKNOWN";
         }
 
 
@@ -71,7 +71,7 @@ namespace WiresharkApp
             {
                 return jsonPacket._source.layers.udp.udp_length;
             }
-            return "N/A";
+            return "UNKNOWN";
         }
 
         private string ParseData(JsonPacket jsonPacket)
@@ -80,7 +80,7 @@ namespace WiresharkApp
             {
                 return jsonPacket._source.layers.tcp.tcp_payload;
             }
-            return "N/A";
+            return "UNKNOWN";
         }
 
         private DateTime ParseTime(JsonPacket jsonPacket)
@@ -122,7 +122,7 @@ namespace WiresharkApp
             {
                 return jsonPacket?._source?.layers?.udp?.udp_srcport;
             }
-            return "N/A";
+            return "UNKNOWN";
         }
 
         private string ParseDestPort(JsonPacket jsonPacket)
@@ -135,7 +135,7 @@ namespace WiresharkApp
             {
                 return jsonPacket?._source?.layers?.udp?.udp_dstport;
             }
-            return "N/A";
+            return "UNKNOWn";
         }
     }
 }

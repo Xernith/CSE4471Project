@@ -27,8 +27,8 @@ namespace NetworkMonitor
         //String fields used for formatting dynamic fields in "Live Feed" tab
         private const string liveTotalPacketsPrefix = "Total Packets: ";
         private const string liveTotalDataPrefix = "Total Data Across Wire: ";
-        private const string liveMostSeenRemotePrefix = "Most Seen Remote IP: ";
-        private const string liveMostSeenLocalPrefix = "Most Used Local IP: ";
+        private const string liveMostSeenSourcePrefix = "Most Seen Source IP: ";
+        private const string liveMostSeenDestinationPrefix = "Most Seen Remote IP: ";
         //For "Connected Devices" panel, width of different display texts
         private const int devicesRankingWidth = 57;
         private const int devicesNameWidth = 42;
@@ -45,8 +45,8 @@ namespace NetworkMonitor
         private readonly Brush[] topClientBrushes = { Brushes.Red, Brushes.Green, Brushes.Blue, Brushes.Purple, Brushes.Orange };
 
         //How large top tick is for usage graph, and increment each tick represents
-        private const int totalGraphPacketCount = 5000;
-        private const int graphPacketTickInterval = 100;
+        private const int totalGraphPacketCount = 100;
+        private const int graphPacketTickInterval = 2;
         //Total time period our "Graph of Devices" covers, and point interval. Both in minutes
         private const int totalGraphTime = 60;
         private const int graphPointInterval = 1;
@@ -109,17 +109,17 @@ namespace NetworkMonitor
         {
             uint totalPackets;
             double totalData;
-            string remoteIP, localIP;
+            string sourceIP, destinationIP;
             //Get data on all clients from database
-            DatabaseParser.RefreshDatabase(out clients, out packets, out totalPackets, out totalData, out remoteIP, out localIP);
+            DatabaseParser.RefreshDatabase(out clients, out packets, out totalPackets, out totalData, out sourceIP, out destinationIP);
 
             RefreshConnectedDevices();
             RefreshLiveFeed();
 
             Live_UpdateTotalPackets(totalPackets);
             Live_UpdateTotalData(totalData);
-            Live_UpdateMostSeenRemoteAddress(remoteIP);
-            Live_UpdateMostSeenLocalDevice(localIP);
+            Live_UpdateMostSeenSourceAddress(sourceIP);
+            Live_UpdateMostSeenDestinationAddress(destinationIP);
         }
 
         #region Connected Devices Tab
@@ -177,7 +177,7 @@ namespace NetworkMonitor
             }
 
             //Organize clients by number of packets sent
-            List<ClientInfo> sortedClients = clients.OrderBy(o => o.PacketCount).ToList();
+            List<ClientInfo> sortedClients = clients.OrderByDescending(o => o.PacketCount).ToList();
 
             //Populate connected devices panel based in ascending packet count order.
             connectedDevicesStack.Children.Clear();
@@ -199,7 +199,7 @@ namespace NetworkMonitor
             //Organize clients by number of packets sent
             List<ClientInfo> sortedClients = new List<ClientInfo>();
             if (clients != null && clients.Length > 0)
-                sortedClients = clients.OrderBy(o => o.PacketCount).ToList();
+                sortedClients = clients.OrderByDescending(o => o.PacketCount).ToList();
 
             //In window space, min/max coordinates for plot.
             double xmin = graphAxisSize,
@@ -393,20 +393,20 @@ namespace NetworkMonitor
         /// Updates our live feed with a new value for most seen remote address
         /// </summary>
         /// <param name="newIp">IP address which has been seen the most</param>
-        private void Live_UpdateMostSeenRemoteAddress(string newIp)
+        private void Live_UpdateMostSeenSourceAddress(string newIp)
         {
-            if (liveMostSeenRemote != null)
-                liveMostSeenRemote.Text = liveMostSeenRemotePrefix + newIp;
+            if (liveMostSeenSource != null)
+                liveMostSeenSource.Text = liveMostSeenSourcePrefix + newIp;
         }
 
         /// <summary>
         /// Updates our live feed with a new value for most seen local device address
         /// </summary>
         /// <param name="newIp">IP address of local device which has been seen the most</param>
-        private void Live_UpdateMostSeenLocalDevice(string newIp)
+        private void Live_UpdateMostSeenDestinationAddress(string newIp)
         {
-            if (liveMostSeenLocal != null)
-                liveMostSeenLocal.Text = liveMostSeenLocalPrefix + newIp;
+            if (liveMostSeenDestination != null)
+                liveMostSeenDestination.Text = liveMostSeenDestinationPrefix + newIp;
         }
 
         /// <summary>

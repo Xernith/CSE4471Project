@@ -13,24 +13,40 @@ namespace NetworkMonitor
         {
             UNKNOWN,
             UDP,
-            TCP
+            TCP,
+            ARP,
+            ICMPV6
         }
 
-        public PacketInfo(string sourceIP, string destIP, PacketProtocol packetProtocol, uint packetPort, double packetSize)
+        public PacketInfo(string packetSourceMAC, string packetDestMAC, string sourceIP, string destIP, PacketProtocol packetProtocol, string packetPort, string packetSize, DateTime packetTime)
         {
+            sourceMAC = packetSourceMAC;
+            destMAC = packetDestMAC;
             sourceAddress = sourceIP;
             destAddress = destIP;
             protocol = packetProtocol;
             localPort = packetPort;
             size = packetSize;
+            time = packetTime;
         }
 
+        private string sourceMAC;
+        private string destMAC;
         private string sourceAddress;
         private string destAddress;
         private PacketProtocol protocol;
-        private uint localPort;
-        private double size;
+        private string localPort;
+        private string size;
+        private DateTime time;
 
+        /// <summary>
+        /// Source MAC address this packet came from
+        /// </summary>
+        public string SourceMAC { get { return sourceMAC; } }
+        /// <summary>
+        /// Dest MAC address this packet is going to
+        /// </summary>
+        public string DestMAC { get { return destMAC; } }
         /// <summary>
         /// Source IP address this packet came from
         /// </summary>
@@ -46,10 +62,14 @@ namespace NetworkMonitor
         /// <summary>
         /// Local port this packet uses
         /// </summary>
-        public uint Port { get { return localPort; } }
+        public string Port { get { return localPort; } }
         /// <summary>
         /// Size of this packet in KB
         /// </summary>
-        public double Size { get { return size; } }
+        public string Size { get { return size; } }
+        /// <summary>
+        /// Time the packet was sent
+        /// </summary>
+        public DateTime Time { get { return time; } }
     }
 }
