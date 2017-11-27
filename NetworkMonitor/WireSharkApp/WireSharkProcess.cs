@@ -14,7 +14,7 @@ namespace WiresharkApp
         public void StartWireShark()
         {
 
-            // ******* EVERYTHING FROM SIMPLE WIRSEHARK TO JSON TO DATABASE PROGRAM
+            // ******* EVERYTHING FROM SIMPLE WIRESHARK TO JSON TO DATABASE PROGRAM
 
             //set the standard file path for tshark
             String tsfilepath = @"""C:\Program Files\Wireshark\tshark.exe""";
@@ -48,7 +48,10 @@ namespace WiresharkApp
 
                 //TODO: process JSON output into database
                 JsonPacketParser jsonPacketParser = new JsonPacketParser();
+
+                //Throwing Error here due to usage of output.json by Dumpcap.exe process after running once.  File already in use.
                 List<Packet> packets = jsonPacketParser.ParseJson(File.ReadAllText("output.json"));
+
                 databaseWriter.WritePackets(packets);
             }
             
