@@ -15,6 +15,12 @@ namespace WiresharkApp
         {
             List<Packet> packets = new List<Packet>();
             List<JsonPacket> jsonPackets = JsonConvert.DeserializeObject<List<JsonPacket>>(jsonString);
+
+            if(jsonPackets == null)
+            {
+                return new List<Packet>();
+            }
+
             foreach(JsonPacket jsonPacket in jsonPackets)
             {
                 packets.Add(ConvertJsonPacket(jsonPacket));
