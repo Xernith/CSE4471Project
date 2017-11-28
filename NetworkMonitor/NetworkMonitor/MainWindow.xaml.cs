@@ -32,6 +32,7 @@ namespace NetworkMonitor
         private const string liveTotalDataPrefix = "Total Data Across Wire: ";
         private const string liveMostSeenSourcePrefix = "Most Seen Source IP: ";
         private const string liveMostSeenDestinationPrefix = "Most Seen Destination IP: ";
+        private const string livePercentageDownloadPrefix = "Percentage of Data Downloaded: ";
         //For "Connected Devices" panel, width of different display texts
         private const int devicesRankingWidth = 57;
         private const int devicesNameWidth = 42;
@@ -110,10 +111,10 @@ namespace NetworkMonitor
         public void UpdateDatabase()
         {
             uint totalPackets;
-            double totalData;
+            double totalData, percentDownload;
             string sourceIP, destinationIP;
             //Get data on all clients from database
-            DatabaseParser.RefreshDatabase(out clients, out packets, out totalPackets, out totalData, out sourceIP, out destinationIP);
+            DatabaseParser.RefreshDatabase(out clients, out packets, out totalPackets, out totalData, out sourceIP, out destinationIP, out percentDownload);
 
             RefreshConnectedDevices();
             RefreshLiveFeed();
@@ -122,6 +123,7 @@ namespace NetworkMonitor
             Live_UpdateTotalData(totalData);
             Live_UpdateMostSeenSourceAddress(sourceIP);
             Live_UpdateMostSeenDestinationAddress(destinationIP);
+            Live_UpdatePercentageDownload(percentDownload);
         }
 
         #region Connected Devices Tab
@@ -421,6 +423,17 @@ namespace NetworkMonitor
         {
             if (liveMostSeenDestination != null)
                 liveMostSeenDestination.Text = liveMostSeenDestinationPrefix + newIp;
+        }
+
+        /// <summary>
+        /// Updates our live feed with a new value for most seen local device address
+        /// </summary>
+        /// <param name="newIp">IP address of local device which has been seen the most</param>
+        private void Live_UpdatePercentageDownload(double percentDownDataKb)
+        {
+            //If input is valid, update text rounded to 3 decimal places
+            if (livePercentageDownload != null && percentDownDataKb > 0)
+                livePercentageDownload.Text = livePercentageDownloadPrefix + percentDownDataKb + @"%";
         }
 
         /// <summary>
