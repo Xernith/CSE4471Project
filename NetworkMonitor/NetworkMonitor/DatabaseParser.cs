@@ -178,6 +178,42 @@ namespace NetworkMonitor
             sqliteConnection.Close();
             return packets.ToArray();
         }
-    
+
+        private static DeviceInfo[] GetAllLocalDevices()
+        {
+            List<DeviceInfo> devices = new List<DeviceInfo>();
+            SQLiteCommand readAllLocalDevices = new SQLiteCommand();
+            readAllLocalDevices.CommandText = "SELECT * FROM Local_Device";
+            readAllLocalDevices.Connection = sqliteConnection;
+
+            sqliteConnection.Open();
+            SQLiteDataReader localDeviceReader = readAllLocalDevices.ExecuteReader();
+            while (localDeviceReader.Read())
+            {
+                NameValueCollection entries = localDeviceReader.GetValues();
+                devices.Add(new DeviceInfo(entries.Get("MAC_Address"), entries.Get("IP_Address"), Int32.Parse(entries.Get("Packets")), Int32.Parse(entries.Get("Total_Data"))));
+            }
+            sqliteConnection.Close();
+            return devices.ToArray();
+        }
+
+        private static DeviceInfo[] GetAllRemoteDevices()
+        {
+            List<DeviceInfo> devices = new List<DeviceInfo>();
+            SQLiteCommand readAllLocalDevices = new SQLiteCommand();
+            readAllLocalDevices.CommandText = "SELECT * FROM Remote_Device";
+            readAllLocalDevices.Connection = sqliteConnection;
+
+            sqliteConnection.Open();
+            SQLiteDataReader localDeviceReader = readAllLocalDevices.ExecuteReader();
+            while (localDeviceReader.Read())
+            {
+                NameValueCollection entries = localDeviceReader.GetValues();
+                devices.Add(new DeviceInfo(entries.Get("MAC_Address"), entries.Get("IP_Address"), Int32.Parse(entries.Get("Packets")), Int32.Parse(entries.Get("Total_Data"))));
+            }
+            sqliteConnection.Close();
+            return devices.ToArray();
+        }
+
     }
 }

@@ -65,7 +65,7 @@ namespace WiresharkApp
             Process tsProcess = new Process();
             ProcessStartInfo startInfo = new ProcessStartInfo();
             startInfo.CreateNoWindow = false;
-            startInfo.WindowStyle = ProcessWindowStyle.Hidden;
+            tsProcess.StartInfo.WindowStyle = ProcessWindowStyle.Hidden;
             //process.StartInfo.UseShellExecute = false;
             //process.StartInfo.RedirectStandardOutput = true;
             //IMPORTANT: make sure that the tshark exe is is the following path
@@ -73,7 +73,7 @@ namespace WiresharkApp
             //startInfo.FileName = @"C:\Program Files\Wireshark\tshark.exe";
             //startInfo.Arguments = @"-i 2 -b duration:6 -b files:5 -T json > json";
             tsProcess.StartInfo.FileName = @"C:\Program Files\Wireshark\tshark.exe";
-            tsProcess.StartInfo.Arguments = @"-i 1 -b duration:5 -b files:5 -w PCAPOutput\output.pcap";
+            tsProcess.StartInfo.Arguments = @"-i 2 -b duration:5 -b files:5 -w PCAPOutput\output.pcap";
             tsProcess.Start();
             //Console.Out.WriteLine(process.StandardOutput.ReadToEnd());
 

@@ -87,6 +87,7 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="DeviceInfo.cs" />
     <Compile Include="PacketInfo.cs" />
     <Compile Include="ClientInfo.cs" />
     <Compile Include="DatabaseParser.cs" />
