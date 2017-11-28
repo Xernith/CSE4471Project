@@ -80,7 +80,9 @@ namespace NetworkMonitor
             {
                 clients[i] = new ClientInfo("Client " + i, 0, 0, "", new uint[60]);
             }
-            orderedSources = orderedSources.OrderBy(x => x.Value).ToList();
+
+            //Fixed to sort in descending order
+            orderedSources = orderedSources.OrderByDescending(x => x.Value).ToList();
             for(int i = 0; i < 7 && i < orderedSources.Count; i++)
             {
                 uint[] packetSamples = new uint[60];
