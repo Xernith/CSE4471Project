@@ -55,10 +55,33 @@ namespace NetworkMonitor
             Dictionary<String, int> MACAddresses = new Dictionary<string, int>();
             foreach (PacketInfo packet in packets)
             {
-                totalData += packets.Length;
+                double toAdd = 0;
+                Double.TryParse(packet.Size, out toAdd);
+                totalData += toAdd;
                 if (sourceIPs.ContainsKey(packet.SourceAddress)) sourceIPs[packet.SourceAddress] += 1; else sourceIPs[packet.SourceAddress] = 1;
                 if (destinationIPs.ContainsKey(packet.DestAddress)) destinationIPs[packet.DestAddress] += 1; else destinationIPs[packet.DestAddress] = 1;
-                if (MACAddresses.ContainsKey(packet.SourceMAC)) MACAddresses[packet.SourceMAC] += 1; else MACAddresses[packet.SourceMAC] = 1;
+                if (packet.SourceAddress.StartsWith("192"))
+                {
+                    if (MACAddresses.ContainsKey(packet.SourceMAC))
+                    {
+                        MACAddresses[packet.SourceMAC] += 1;
+                    }
+                    else
+                    {
+                        MACAddresses.Add(packet.SourceMAC, 1);
+                    }
+                }
+                if (packet.DestAddress.StartsWith("192"))
+                {
+                    if (MACAddresses.ContainsKey(packet.DestMAC))
+                    {
+                        MACAddresses[packet.DestMAC] += 1;
+                    }
+                    else
+                    {
+                        MACAddresses.Add(packet.DestMAC, 1);
+                    }
+                }
             }
             if (sourceIPs.Count != 0 && destinationIPs.Count != 0)
             {

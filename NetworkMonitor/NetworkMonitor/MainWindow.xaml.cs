@@ -31,7 +31,7 @@ namespace NetworkMonitor
         private const string liveTotalPacketsPrefix = "Total Packets: ";
         private const string liveTotalDataPrefix = "Total Data Across Wire: ";
         private const string liveMostSeenSourcePrefix = "Most Seen Source IP: ";
-        private const string liveMostSeenDestinationPrefix = "Most Seen Remote IP: ";
+        private const string liveMostSeenDestinationPrefix = "Most Seen Destination IP: ";
         //For "Connected Devices" panel, width of different display texts
         private const int devicesRankingWidth = 57;
         private const int devicesNameWidth = 42;
