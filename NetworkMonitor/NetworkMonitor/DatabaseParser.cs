@@ -132,7 +132,7 @@ namespace NetworkMonitor
                 }
                 clients[i] = new ClientInfo("Client " + i, (uint) orderedSources[i].Value, data/1000, macAddress, packetSamples);
             }
-            //totalData /= 1000;
+            totalData /= 1000;
             if (totalData > 0)
             {
                 percentDownloaded = downloadData / totalData;
