@@ -65,7 +65,7 @@ namespace WiresharkApp
             Process tsProcess = new Process();
             ProcessStartInfo startInfo = new ProcessStartInfo();
             startInfo.CreateNoWindow = false;
-            startInfo.WindowStyle = ProcessWindowStyle.Normal;
+            tsProcess.StartInfo.WindowStyle = ProcessWindowStyle.Hidden;
             //process.StartInfo.UseShellExecute = false;
             //process.StartInfo.RedirectStandardOutput = true;
             //IMPORTANT: make sure that the tshark exe is is the following path
@@ -119,7 +119,7 @@ namespace WiresharkApp
                         Process process1 = new Process();
                         //ProcessStartInfo startInfo1 = new ProcessStartInfo();
                         process1.StartInfo.CreateNoWindow = false;
-                        process1.StartInfo.WindowStyle = ProcessWindowStyle.Normal;
+                        process1.StartInfo.WindowStyle = ProcessWindowStyle.Hidden;
                         process1.StartInfo.RedirectStandardOutput = false;
                         //process1.StartInfo.UseShellExecute = false;
                         //IMPORTANT: make sure that the tshark exe is is the following path
