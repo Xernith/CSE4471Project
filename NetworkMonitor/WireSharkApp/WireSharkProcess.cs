@@ -65,7 +65,7 @@ namespace WiresharkApp
             Process tsProcess = new Process();
             ProcessStartInfo startInfo = new ProcessStartInfo();
             startInfo.CreateNoWindow = false;
-            startInfo.WindowStyle = ProcessWindowStyle.Normal;
+            startInfo.WindowStyle = ProcessWindowStyle.Hidden;
             //process.StartInfo.UseShellExecute = false;
             //process.StartInfo.RedirectStandardOutput = true;
             //IMPORTANT: make sure that the tshark exe is is the following path
@@ -80,6 +80,7 @@ namespace WiresharkApp
             var directory = new DirectoryInfo("PCAPOutput");
             string tempFileName = "";
             while (true)
+
             {
                 //get most recently written file
                 //got this code block from https://stackoverflow.com/questions/1179970/how-to-find-the-most-recent-file-in-a-directory-using-net-and-without-looping
@@ -119,7 +120,7 @@ namespace WiresharkApp
                         Process process1 = new Process();
                         //ProcessStartInfo startInfo1 = new ProcessStartInfo();
                         process1.StartInfo.CreateNoWindow = false;
-                        process1.StartInfo.WindowStyle = ProcessWindowStyle.Normal;
+                        process1.StartInfo.WindowStyle = ProcessWindowStyle.Hidden;
                         process1.StartInfo.RedirectStandardOutput = false;
                         //process1.StartInfo.UseShellExecute = false;
                         //IMPORTANT: make sure that the tshark exe is is the following path
@@ -139,7 +140,7 @@ namespace WiresharkApp
 
                         //Throwing Error here due to usage of output.json by Dumpcap.exe process after running once.  File already in use.
                         List<Packet> packets = jsonPacketParser.ParseJson(File.ReadAllText(@"JSONOutput\output.json"));
-
+                        databaseWriter.UpdateDevices(packets);
                         databaseWriter.WritePackets(packets);
                     }
                     catch (Exception e)

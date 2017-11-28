@@ -6,7 +6,6 @@ namespace WiresharkApp
     {
         public string Protocol { get; set; }
         public string Length { get; set; }
-        public string Data { get; set; }
         public DateTime Time { get; set; }
         public string Source_MAC { get; set; }
         public string Source_IP { get; set; }
