@@ -6,6 +6,8 @@ namespace NetworkMonitor
     /// ClientInfo.cs - V1
     /// 
     /// Stores info read in from database about a given client.
+    /// 
+    /// Code is by Tim Williams, no external plugins are used for this class.
     /// </summary>
     public struct ClientInfo
     {
