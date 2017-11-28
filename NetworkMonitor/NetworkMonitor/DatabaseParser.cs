@@ -63,9 +63,6 @@ namespace NetworkMonitor
                 if (sourceIPs.ContainsKey(packet.SourceAddress))
                 {
                     sourceIPs[packet.SourceAddress] += 1;
-                    double temp;
-                    Double.TryParse(packet.Size, out temp);
-                    downloadData += temp;
                 }
                 else sourceIPs[packet.SourceAddress] = 1;
                 if (destinationIPs.ContainsKey(packet.DestAddress)) destinationIPs[packet.DestAddress] += 1; else destinationIPs[packet.DestAddress] = 1;
@@ -90,6 +87,9 @@ namespace NetworkMonitor
                     {
                         MACAddresses.Add(packet.DestMAC, 1);
                     }
+                    double temp;
+                    Double.TryParse(packet.Size, out temp);
+                    downloadData += temp;
                 }
             }
             if (sourceIPs.Count != 0 && destinationIPs.Count != 0)
@@ -132,15 +132,15 @@ namespace NetworkMonitor
                 }
                 clients[i] = new ClientInfo("Client " + i, (uint) orderedSources[i].Value, data/1000, macAddress, packetSamples);
             }
-            totalData /= 1000;
             if (totalData > 0)
             {
-                percentDownloaded = downloadData / totalData;
+                percentDownloaded = (downloadData / totalData) * 100;
             }
             else
             {
                 percentDownloaded = 0;
             }
+            totalData /= 1000;
         }
 
         private static PacketInfo[] GetAllPackets()
