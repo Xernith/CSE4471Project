@@ -22,7 +22,8 @@ namespace NetworkMonitor
         /// <param name="totalData">Total data in KB by all connections</param>
         /// <param name="mostSeenSourceIP">Most seen source IP</param>
         /// <param name="mostSeenDestinationIP">Most seen destination IP</param>
-        public static void RefreshDatabase(out ClientInfo[] clients, out PacketInfo[] packets, out uint totalPackets, out double totalData, out string mostSeenSourceIP, out string mostSeenDestinationIP)
+        /// <param name="percentDownloaded">Percentage of data downloaded vs uploaded</param>
+        public static void RefreshDatabase(out ClientInfo[] clients, out PacketInfo[] packets, out uint totalPackets, out double totalData, out string mostSeenSourceIP, out string mostSeenDestinationIP, out double percentDownloaded)
         {
             ///TODO: TEMP POPULATION OF CLIENTS, MAKE THIS ACTUALLY GRAB FROM DATABASE LATER
             //Random rnd = new Random();
@@ -50,13 +51,22 @@ namespace NetworkMonitor
             totalPackets = (uint) packets.Length;
 
             totalData = 0;
+            double downloadData = 0;
             Dictionary<String, int> sourceIPs = new Dictionary<string, int>();
             Dictionary<String, int> destinationIPs = new Dictionary<string, int>();
             Dictionary<String, int> MACAddresses = new Dictionary<string, int>();
             foreach (PacketInfo packet in packets)
             {
+                //totalData += packets.Length;
                 totalData += packets.Length;
-                if (sourceIPs.ContainsKey(packet.SourceAddress)) sourceIPs[packet.SourceAddress] += 1; else sourceIPs[packet.SourceAddress] = 1;
+                if (sourceIPs.ContainsKey(packet.SourceAddress))
+                {
+                    sourceIPs[packet.SourceAddress] += 1;
+                    double temp;
+                    Double.TryParse(packet.Size, out temp);
+                    downloadData += temp;
+                }
+                else sourceIPs[packet.SourceAddress] = 1;
                 if (destinationIPs.ContainsKey(packet.DestAddress)) destinationIPs[packet.DestAddress] += 1; else destinationIPs[packet.DestAddress] = 1;
                 if (MACAddresses.ContainsKey(packet.SourceMAC)) MACAddresses[packet.SourceMAC] += 1; else MACAddresses[packet.SourceMAC] = 1;
             }
@@ -100,7 +110,15 @@ namespace NetworkMonitor
                 }
                 clients[i] = new ClientInfo("Client " + i, (uint) orderedSources[i].Value, data/1000, macAddress, packetSamples);
             }
-            totalData /= 1000;
+            //totalData /= 1000;
+            if (totalData > 0)
+            {
+                percentDownloaded = downloadData / totalData;
+            }
+            else
+            {
+                percentDownloaded = 0;
+            }
         }
 
         private static PacketInfo[] GetAllPackets()
