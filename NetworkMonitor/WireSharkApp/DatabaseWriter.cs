@@ -40,7 +40,7 @@ namespace WiresharkApp
             SQLiteCommand createTablePacket = new SQLiteCommand();
 
             createTableDevice.CommandText = "CREATE TABLE \'Device\' ( \'MAC_Address\' VARCHAR(17) NOT NULL, \'IP_Address\' VARCHAR(30) NOT NULL, \'Device_Name\' VARCHAR(50) NOT NULL, PRIMARY KEY (\'MAC_Address\'));";
-            createTablePacket.CommandText = "CREATE TABLE \'Packet\' ( \'ID\' INTEGER PRIMARY KEY AUTOINCREMENT,\'Protocol\' VARCHAR(10),\'Length\' INTEGER(5),\'Data\' VARCHAR(2000),\'Time\' TIMESTAMP,\'Source_MAC\' VARCHAR(17),\'Source_IP\' VARCHAR(30),\'Source_Port\' INTEGER(10),\'Dest_MAC\' VARCHAR(17),\'Dest_IP\' VARCHAR(30),\'Dest_Port\' INTEGER(10));";
+            createTablePacket.CommandText = "CREATE TABLE \'Packet\' ( \'ID\' INTEGER PRIMARY KEY AUTOINCREMENT,\'Protocol\' VARCHAR(10),\'Length\' INTEGER(5),\'Time\' TIMESTAMP,\'Source_MAC\' VARCHAR(17),\'Source_IP\' VARCHAR(30),\'Source_Port\' INTEGER(10),\'Dest_MAC\' VARCHAR(17),\'Dest_IP\' VARCHAR(30),\'Dest_Port\' INTEGER(10));";
 
             sqliteConnection.Open();
 
@@ -62,10 +62,9 @@ namespace WiresharkApp
             insertPacket.Connection = sqliteConnection;
             foreach (Packet packet in packets)
             {
-                insertPacket.CommandText = "INSERT INTO Packet (Protocol, Length, Data, Time, Source_MAC, Source_IP, Source_Port, Dest_MAC, Dest_IP, Dest_Port) VALUES ("
+                insertPacket.CommandText = "INSERT INTO Packet (Protocol, Length, Time, Source_MAC, Source_IP, Source_Port, Dest_MAC, Dest_IP, Dest_Port) VALUES ("
                     + '\''+ packet.Protocol + '\'' + "," 
 					+ '\'' + packet.Length + '\'' +  "," 
-					+ '\'' +  packet.Data + '\'' +  "," 
 					+ '\'' +  packet.Time + '\'' +  "," 
 					+ '\'' +  packet.Source_MAC + '\'' +  "," 
 					+ '\'' +  packet.Source_IP + '\'' +  "," 
