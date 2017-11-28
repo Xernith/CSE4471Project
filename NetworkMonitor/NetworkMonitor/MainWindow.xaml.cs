@@ -13,6 +13,9 @@ namespace NetworkMonitor
 {
     /// <summary>
     /// Interaction logic for MainWindow.xaml
+    /// 
+    /// Code is written by Tim Williams, 
+    /// no external plugins used for this script file besides interfaces to other classes which interact with Wireshark.
     /// </summary>
     public partial class MainWindow : Window
     {
@@ -44,9 +47,8 @@ namespace NetworkMonitor
         //Colors for top 5 clients on connectedDevices tab
         private readonly Brush[] topClientBrushes = { Brushes.Red, Brushes.Green, Brushes.Blue, Brushes.Purple, Brushes.Orange };
 
-        //How large top tick is for usage graph, and increment each tick represents
-        private const int totalGraphPacketCount = 100;
-        private const int graphPacketTickInterval = 2;
+        //Number of ticks for graph y-axis
+        private const int graphPacketTicks = 50;
         //Total time period our "Graph of Devices" covers, and point interval. Both in minutes
         private const int totalGraphTime = 60;
         private const int graphPointInterval = 1;
@@ -206,9 +208,21 @@ namespace NetworkMonitor
                 xmax = usageGraph.ActualWidth - graphAxisSize,
                 ymin = graphAxisSize,
                 ymax = usageGraph.ActualHeight - graphAxisSize;
+
+            //Calculate what the top tick on our graph y-axis represents based on the largest packet count, and calculate tick interval from this.
+            int totalGraphPacketCount = 0;
+            foreach (ClientInfo c in sortedClients)
+            {
+                foreach (uint p in c.PacketSamples)
+                    totalGraphPacketCount = Math.Max(totalGraphPacketCount, (int)p);
+            }
+
+            if (totalGraphPacketCount == 0)
+                totalGraphPacketCount = 100;
+
             //Step interval in pixels for x and y axis. Number of ticks is based off interval.
             double xTickStep = (usageGraph.ActualWidth - xmin) / (totalGraphTime / graphPointInterval),
-                yTickStep = (usageGraph.ActualHeight - ymin) / (totalGraphPacketCount / graphPacketTickInterval);
+                yTickStep = (usageGraph.ActualHeight - ymin) / graphPacketTicks;
 
             //Draw "Time" axis
             GeometryGroup timeAxis = new GeometryGroup();
@@ -236,7 +250,7 @@ namespace NetworkMonitor
             GeometryGroup packetAxis = new GeometryGroup();
             packetAxis.Children.Add(new LineGeometry(new Point(xmin, 0), new Point(xmin, usageGraph.ActualHeight)));
             double y = ymax;
-            for (int i = 0; i < totalGraphPacketCount / graphPacketTickInterval; i++)
+            for (int i = 0; i < graphPacketTicks; i++)
             {
                 packetAxis.Children.Add(new LineGeometry(
                     new Point(xmin - graphAxisSize / 2, y),
@@ -266,7 +280,7 @@ namespace NetworkMonitor
                     y = (i < client.PacketSamples.Length) ? client.PacketSamples[i] : 0;
 
                     //Scale packet sample based on our sizes
-                    y = ymax - yTickStep * (y / graphPacketTickInterval);
+                    y = Math.Max(ymax - yTickStep * ((y / totalGraphPacketCount) * graphPacketTicks), ymin);
 
                     //Create point
                     graphPoints.Add(new Point(x, y));
