@@ -70,6 +70,7 @@
   <ItemGroup>
     <Compile Include="DatabaseWriter.cs" />
     <Compile Include="Device.cs" />
+    <Compile Include="EncryptionHandler.cs" />
     <Compile Include="JsonPacket.cs" />
     <Compile Include="JsonPacketParser.cs" />
     <Compile Include="Packet.cs" />
