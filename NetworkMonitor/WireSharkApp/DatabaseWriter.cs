@@ -137,7 +137,7 @@ namespace WiresharkApp
                         }
                         else
                         {
-                            localDevicesToUpdate.Add(packet.Dest_MAC, new Device { MAC_Address = packet.Source_MAC, IP_Address = packet.Source_IP, Packets = 1, TotalData = packetSize });
+                            localDevicesToUpdate.Add(packet.Dest_MAC, new Device { MAC_Address = packet.Dest_MAC, IP_Address = packet.Dest_IP, Packets = 1, TotalData = packetSize });
                         }
                     }
                     else
