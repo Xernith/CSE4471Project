@@ -34,7 +34,6 @@ namespace WiresharkApp
             {
                 Protocol = ParseProtocol(jsonPacket),
                 Length = ParseLength(jsonPacket),
-                Data = ParseData(jsonPacket),
                 Time = ParseTime(jsonPacket),
                 Source_MAC = ParseSourceMAC(jsonPacket),
                 Source_IP = ParseSourceIP(jsonPacket),
@@ -76,15 +75,6 @@ namespace WiresharkApp
             if(jsonPacket?._source?.layers?.udp != null)
             {
                 return jsonPacket._source.layers.udp.udp_length;
-            }
-            return "UNKNOWN";
-        }
-
-        private string ParseData(JsonPacket jsonPacket)
-        {
-            if(jsonPacket?._source?.layers?.tcp?.tcp_payload != null)
-            {
-                return jsonPacket._source.layers.tcp.tcp_payload;
             }
             return "UNKNOWN";
         }
@@ -141,7 +131,7 @@ namespace WiresharkApp
             {
                 return jsonPacket?._source?.layers?.udp?.udp_dstport;
             }
-            return "UNKNOWn";
+            return "UNKNOWN";
         }
     }
 }

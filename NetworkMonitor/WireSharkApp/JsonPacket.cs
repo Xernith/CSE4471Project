@@ -33,8 +33,6 @@ namespace WiresharkApp
         public string tcp_dstport { get; set; }
         [JsonProperty("tcp.len")]
         public string tcp_len { get; set; }
-        [JsonProperty("tcp.payload")]
-        public string tcp_payload { get; set; }
     }
 
 
