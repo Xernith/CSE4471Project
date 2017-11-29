@@ -102,35 +102,31 @@ namespace NetworkMonitor
                 mostSeenSourceIP = "Data not sampled yet";
                 mostSeenDestinationIP = "Data not sampled yet";
             }
-            List<KeyValuePair<string, int>> orderedSources = new List<KeyValuePair<string, int>>();
-            foreach(KeyValuePair<string, int> pair in MACAddresses)
-            {
-                orderedSources.Add(pair);
-            }
+
+            DeviceInfo[] localDevices = GetAllLocalDevices();
+            localDevices = localDevices.OrderByDescending(x => x.TotalDataUsage).ToArray();
+
             clients = new ClientInfo[7];
-            for(int i = 0; i < 7; i++)
+            for(int i = 0; i < clients.Length; i++)
             {
                 clients[i] = new ClientInfo("Client " + i, 0, 0, "", new uint[60]);
             }
+            for(int i = 0; i < 7 && i < localDevices.Length; i++)
+            {
+                clients[i] = new ClientInfo(localDevices[i].IPAddress, (uint) localDevices[i].PacketCount, localDevices[i].TotalDataUsage, localDevices[i].MACAddress, new uint[60]);
+            }
 
-            //Fixed to sort in descending order
-            orderedSources = orderedSources.OrderByDescending(x => x.Value).ToList();
-            for(int i = 0; i < 7 && i < orderedSources.Count; i++)
+            for(int i = 0; i < localDevices.Length; i++)
             {
                 uint[] packetSamples = new uint[60];
-                double data = 0;
-                string macAddress = orderedSources[i].Key;
                 foreach(PacketInfo packet in packets)
                 {
-                    double toAdd = 0;
-                    if(packet.SourceMAC == orderedSources[i].Key)
+                    if(packet.SourceMAC == localDevices[i].MACAddress || packet.DestMAC == localDevices[i].MACAddress)
                     {
                         packetSamples[(DateTime.Now - packet.Time).Seconds]++;
-                        Double.TryParse(packet.Size, out toAdd);
                     }
-                    data += toAdd;
                 }
-                clients[i] = new ClientInfo("Client " + i, (uint) orderedSources[i].Value, data/1000, macAddress, packetSamples);
+                clients[i].packetSamples = packetSamples;
             }
             if (totalData > 0)
             {

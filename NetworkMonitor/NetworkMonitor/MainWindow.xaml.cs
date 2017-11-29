@@ -215,7 +215,7 @@ namespace NetworkMonitor
             int totalGraphPacketCount = 0;
             foreach (ClientInfo c in sortedClients)
             {
-                foreach (uint p in c.PacketSamples)
+                foreach (uint p in c.packetSamples)
                     totalGraphPacketCount = Math.Max(totalGraphPacketCount, (int)p);
             }
 
@@ -279,7 +279,7 @@ namespace NetworkMonitor
                 //Draw point for each recorded packet count for the last 60 minutes.
                 for (int i = 0; i < totalGraphTime; i++)
                 {
-                    y = (i < client.PacketSamples.Length) ? client.PacketSamples[i] : 0;
+                    y = (i < client.packetSamples.Length) ? client.packetSamples[i] : 0;
 
                     //Scale packet sample based on our sizes
                     y = Math.Max(ymax - yTickStep * ((y / totalGraphPacketCount) * graphPacketTicks), ymin);

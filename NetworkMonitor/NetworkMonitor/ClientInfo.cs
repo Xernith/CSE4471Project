@@ -24,7 +24,7 @@ namespace NetworkMonitor
         private uint packetCount;
         private double totalData;
         private string macAddress;
-        private uint[] packetSamples;
+        public uint[] packetSamples;
 
         /// <summary>
         /// Human-readable name for this client connection
@@ -42,9 +42,5 @@ namespace NetworkMonitor
         /// Mac address for this client connection
         /// </summary>
         public string MacAddress { get { return macAddress; } }
-        /// <summary>
-        /// Each index represents the number of packets sent in the last minute, for up to 60 minutes/entries.
-        /// </summary>
-        public uint[] PacketSamples { get { return packetSamples; } }
     }
 }
