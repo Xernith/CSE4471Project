@@ -151,7 +151,7 @@ namespace NetworkMonitor
             while (packetReader.Read())
             {
                 NameValueCollection entries = packetReader.GetValues();
-                packets.Add(new PacketInfo(entries.Get("Source_MAC"), entries.Get("Dest_MAC"), entries.Get("Source_IP"), entries.Get("Dest_IP"), (PacketProtocol) Enum.Parse(typeof(PacketProtocol), entries.Get("Protocol"), true), entries.Get("Source_Port"),entries.Get("Length"), DateTime.Parse(entries.Get("Time"))));
+				packets.Add(new PacketInfo(WiresharkApp.EncryptionHandler.Decrypt(entries.Get("Source_MAC")), WiresharkApp.EncryptionHandler.Decrypt(entries.Get("Dest_MAC")), WiresharkApp.EncryptionHandler.Decrypt(entries.Get("Source_IP")), WiresharkApp.EncryptionHandler.Decrypt(entries.Get("Dest_IP")), (PacketProtocol) Enum.Parse(typeof(PacketProtocol), entries.Get("Protocol"), true), entries.Get("Source_Port"),entries.Get("Length"), DateTime.Parse(entries.Get("Time"))));
             }
             sqliteConnection.Close();
             return packets.ToArray();   
@@ -169,7 +169,7 @@ namespace NetworkMonitor
             while (packetReader.Read())
             {
                 NameValueCollection entries = packetReader.GetValues();
-                packets.Add(new PacketInfo(entries.Get("Source_MAC"), entries.Get("Dest_MAC"), entries.Get("Source_IP"), entries.Get("Dest_IP"), (PacketProtocol)Enum.Parse(typeof(PacketProtocol), entries.Get("Protocol"), true), entries.Get("Source_Port"), entries.Get("Length"), DateTime.Parse(entries.Get("Time"))));
+				packets.Add(new PacketInfo(WiresharkApp.EncryptionHandler.Decrypt(entries.Get("Source_MAC")), WiresharkApp.EncryptionHandler.Decrypt(entries.Get("Dest_MAC")), WiresharkApp.EncryptionHandler.Decrypt(entries.Get("Source_IP")), WiresharkApp.EncryptionHandler.Decrypt(entries.Get("Dest_IP")), (PacketProtocol) Enum.Parse(typeof(PacketProtocol), entries.Get("Protocol"), true), entries.Get("Source_Port"),entries.Get("Length"), DateTime.Parse(entries.Get("Time"))));
             }
             sqliteConnection.Close();
             return packets.ToArray();
@@ -187,7 +187,7 @@ namespace NetworkMonitor
             while (localDeviceReader.Read())
             {
                 NameValueCollection entries = localDeviceReader.GetValues();
-                devices.Add(new DeviceInfo(entries.Get("MAC_Address"), entries.Get("IP_Address"), Int32.Parse(entries.Get("Packets")), Int32.Parse(entries.Get("Total_Data"))));
+				devices.Add(new DeviceInfo(WiresharkApp.EncryptionHandler.Decrypt(entries.Get("MAC_Address")), WiresharkApp.EncryptionHandler.Decrypt(entries.Get("IP_Address")), Int32.Parse(entries.Get("Packets")), Int32.Parse(entries.Get("Total_Data"))));
             }
             sqliteConnection.Close();
             return devices.ToArray();
@@ -205,7 +205,7 @@ namespace NetworkMonitor
             while (localDeviceReader.Read())
             {
                 NameValueCollection entries = localDeviceReader.GetValues();
-                devices.Add(new DeviceInfo(entries.Get("MAC_Address"), entries.Get("IP_Address"), Int32.Parse(entries.Get("Packets")), Int32.Parse(entries.Get("Total_Data"))));
+				devices.Add(new DeviceInfo(WiresharkApp.EncryptionHandler.Decrypt(entries.Get("MAC_Address")), WiresharkApp.EncryptionHandler.Decrypt(entries.Get("IP_Address")), Int32.Parse(entries.Get("Packets")), Int32.Parse(entries.Get("Total_Data"))));
             }
             sqliteConnection.Close();
             return devices.ToArray();

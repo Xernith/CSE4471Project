@@ -21,6 +21,7 @@ namespace WiresharkApp
             sqliteConnection = new SQLiteConnection();
             localDevices = new Dictionary<string, Device>();
             remoteDevices = new Dictionary<string, Device>();
+			EncryptionHandler.setKey ();
         }
 
         public void CreateDatabaseFile(string databasePath)
@@ -78,11 +79,11 @@ namespace WiresharkApp
                     + '\''+ packet.Protocol + '\'' + "," 
 					+ '\'' + packet.Length + '\'' +  "," 
 					+ '\'' +  packet.Time + '\'' +  "," 
-					+ '\'' +  packet.Source_MAC + '\'' +  "," 
-					+ '\'' +  packet.Source_IP + '\'' +  "," 
+					+ '\'' +  EncryptionHandler.Encrypt(packet.Source_MAC) + '\'' +  "," 
+					+ '\'' +  EncryptionHandler.Encrypt(packet.Source_IP) + '\'' +  "," 
 					+ '\'' +  packet.Source_Port + '\'' +  "," 
-					+ '\'' +  packet.Dest_MAC + '\'' +  "," 
-					+ '\'' +  packet.Dest_IP + '\'' + "," 
+					+ '\'' +  EncryptionHandler.Encrypt(packet.Dest_MAC) + '\'' +  "," 
+					+ '\'' +  EncryptionHandler.Encrypt(packet.Dest_IP) + '\'' + "," 
 					+ '\'' + packet.Dest_Port + '\'' +  ");";
                 insertPacket.ExecuteNonQuery();
             }
@@ -214,11 +215,11 @@ namespace WiresharkApp
             foreach (KeyValuePair<string, Device> kvp in localDevicesToUpdate) {
                 if (localDevices.ContainsKey(kvp.Key))
                 {
-                    updateLocalDevices.CommandText = "UPDATE Local_Device SET Packets = " + (kvp.Value.Packets + localDevices[kvp.Key].Packets) + ", Total_Data = " + (kvp.Value.TotalData + localDevices[kvp.Key].TotalData) + " WHERE MAC_Address = " + '\'' + kvp.Value.MAC_Address + '\''+  ";";
+					updateLocalDevices.CommandText = "UPDATE Local_Device SET Packets = " + (kvp.Value.Packets + localDevices[kvp.Key].Packets) + ", Total_Data = " + (kvp.Value.TotalData + localDevices[kvp.Key].TotalData) + " WHERE MAC_Address = " + '\'' + EncryptionHandler.Encrypt(kvp.Value.MAC_Address) + '\''+  ";";
                 }
                 else
                 {
-                    updateLocalDevices.CommandText = "INSERT INTO Local_Device (MAC_Address, IP_Address, Packets, Total_Data) VALUES (" + '\'' + kvp.Value.MAC_Address + '\'' + "," +  '\'' + kvp.Value.IP_Address + '\'' + "," + kvp.Value.Packets + "," + kvp.Value.TotalData + ");";
+					updateLocalDevices.CommandText = "INSERT INTO Local_Device (MAC_Address, IP_Address, Packets, Total_Data) VALUES (" + '\'' + EncryptionHandler.Encrypt(kvp.Value.MAC_Address) + '\'' + "," +  '\'' + EncryptionHandler.Encrypt(kvp.Value.IP_Address) + '\'' + "," + kvp.Value.Packets + "," + kvp.Value.TotalData + ");";
                     /*
                     PushbulletClient client = new PushbulletClient("DA API KEY");
                     var currentUserInformation = client.CurrentUsersInformation();
@@ -249,11 +250,11 @@ namespace WiresharkApp
             {
                 if (remoteDevices.ContainsKey(kvp.Key))
                 {
-                    updateRemoteDevices.CommandText = "UPDATE Remote_Device SET Packets = " + (kvp.Value.Packets + remoteDevices[kvp.Key].Packets) + ", Total_Data = " + (kvp.Value.TotalData + remoteDevices[kvp.Key].TotalData) + " WHERE MAC_Address = " + '\'' + kvp.Value.MAC_Address + '\'' + ";";
+					updateRemoteDevices.CommandText = "UPDATE Remote_Device SET Packets = " + (kvp.Value.Packets + remoteDevices[kvp.Key].Packets) + ", Total_Data = " + (kvp.Value.TotalData + remoteDevices[kvp.Key].TotalData) + " WHERE MAC_Address = " + '\'' + EncryptionHandler.Encrypt(kvp.Value.MAC_Address)b + '\'' + ";";
                 }
                 else
                 {
-                    updateRemoteDevices.CommandText = "INSERT INTO Remote_Device (MAC_Address, IP_Address, Packets, Total_Data) VALUES (" + '\'' + kvp.Value.MAC_Address + '\'' + "," + '\'' + kvp.Value.IP_Address + '\'' + "," + kvp.Value.Packets + "," + kvp.Value.TotalData + ");";
+					updateRemoteDevices.CommandText = "INSERT INTO Remote_Device (MAC_Address, IP_Address, Packets, Total_Data) VALUES (" + '\'' + EncryptionHandler.Encrypt(kvp.Value.MAC_Address) + '\'' + "," + '\'' + EncryptionHandler.Encrypt(kvp.Value.IP_Address) + '\'' + "," + kvp.Value.Packets + "," + kvp.Value.TotalData + ");";
                 }
                 updateRemoteDevices.ExecuteNonQuery();
             }
