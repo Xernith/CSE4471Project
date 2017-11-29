@@ -3,6 +3,9 @@ using System.Collections.Generic;
 using System.Data.SQLite;
 using System.IO;
 using System.Configuration;
+using PushbulletSharp;
+using PushbulletSharp.Models.Requests;
+using PushbulletSharp.Models.Responses;
 
 namespace WiresharkApp
 {
@@ -216,6 +219,22 @@ namespace WiresharkApp
                 else
                 {
                     updateLocalDevices.CommandText = "INSERT INTO Local_Device (MAC_Address, IP_Address, Packets, Total_Data) VALUES (" + '\'' + kvp.Value.MAC_Address + '\'' + "," +  '\'' + kvp.Value.IP_Address + '\'' + "," + kvp.Value.Packets + "," + kvp.Value.TotalData + ");";
+                    /*
+                    PushbulletClient client = new PushbulletClient("DA API KEY");
+                    var currentUserInformation = client.CurrentUsersInformation();
+
+                    if (currentUserInformation != null)
+                    {
+                        PushNoteRequest reqeust = new PushNoteRequest()
+                        {
+                            Email = currentUserInformation.Email,
+                            Title = "New Device on network",
+                            Body = "Device Mac: " + kvp.Value.MAC_Address + "\nDevice IP: " + kvp.Value.IP_Address
+                        };
+
+                        PushResponse response = client.PushNote(reqeust);
+                    }
+                    */
                 }
                 updateLocalDevices.ExecuteNonQuery();
             }

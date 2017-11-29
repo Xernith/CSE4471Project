@@ -112,3 +112,6 @@ C:\Users\Patrick\Source\Repos\CSE4471Project\NetworkMonitor\NetworkMonitor\obj\D
 C:\Users\Patrick\Source\Repos\CSE4471Project\NetworkMonitor\NetworkMonitor\obj\Debug\NetworkMonitor.csproj.CoreCompileInputs.cache
 C:\Users\Patrick\Source\Repos\CSE4471Project\NetworkMonitor\NetworkMonitor\obj\Debug\NetworkMonitor.exe
 C:\Users\Patrick\Source\Repos\CSE4471Project\NetworkMonitor\NetworkMonitor\obj\Debug\NetworkMonitor.pdb
+C:\Users\Johan\Desktop\CSE4471Project\NetworkMonitor\NetworkMonitor\bin\Debug\BouncyCastle.dll
+C:\Users\Johan\Desktop\CSE4471Project\NetworkMonitor\NetworkMonitor\bin\Debug\PushbulletSharp.dll
+C:\Users\Johan\Desktop\CSE4471Project\NetworkMonitor\NetworkMonitor\bin\Debug\PushbulletSharp.pdb

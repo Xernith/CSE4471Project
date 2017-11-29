@@ -16,7 +16,7 @@ namespace NetworkMonitor
     {
         private void App_Exit(object sender, ExitEventArgs e)
         {
-            File.Delete("database.sqlite");
+            ///File.Delete("database.sqlite");
         }
     }
 }

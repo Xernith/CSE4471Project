@@ -97,6 +97,8 @@
                         <ColumnDefinition Width="416*"/>
                     </Grid.ColumnDefinitions>
                     <TextBlock TextWrapping="Wrap" Text="Notification Settings" FontSize="24" Margin="179,0" VerticalAlignment="Top" HorizontalAlignment="Center" Width="298" Height="33" TextAlignment="Center" Grid.ColumnSpan="3"/>
+                    <TextBox Grid.ColumnSpan="3" HorizontalAlignment="Center" Height="32" Margin="197,137,179,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="280"/>
+                    <TextBlock Grid.ColumnSpan="3" HorizontalAlignment="Center" Height="29.392" Margin="196.717,107.161,200.837,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="258.446" TextAlignment="Center"><Run Text="PushBullet API Key"/><LineBreak/><Run/></TextBlock>
                 </Grid>
             </TabItem>
         </TabControl>

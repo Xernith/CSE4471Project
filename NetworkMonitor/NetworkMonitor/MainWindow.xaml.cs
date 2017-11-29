@@ -553,21 +553,26 @@ namespace NetworkMonitor
         /// </summary>
         /// <param name="dataKb">Data measurement in KB</param>
         /// <returns>dataKb formatted properly</returns>
-        private string FormatDataText(double dataKb)
+        private string FormatDataText(double dataB)
         {
-            string unit = "KB";
-            if (dataKb >= 1000)
+            string unit = "Bytes";
+            if (dataB >= 1000)
             {
-                dataKb /= 1000;
+                dataB /= 1000;
+                unit = "KB";
+            }
+            if (dataB >= 1000)
+            {
+                dataB /= 1000;
                 unit = "MB";
             }
-            if (dataKb >= 1000)
+            if (dataB >= 1000)
             {
-                dataKb /= 1000;
+                dataB /= 1000;
                 unit = "GB";
             }
 
-            return String.Format("{0:n} {1}", dataKb, unit);
+            return String.Format("{0:n} {1}", dataB, unit);
         }
 
         /// <summary>

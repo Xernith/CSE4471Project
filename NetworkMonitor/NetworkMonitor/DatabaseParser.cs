@@ -116,12 +116,12 @@ namespace NetworkMonitor
                 clients[i] = new ClientInfo(localDevices[i].IPAddress, (uint) localDevices[i].PacketCount, localDevices[i].TotalDataUsage, localDevices[i].MACAddress, new uint[60]);
             }
 
-            for(int i = 0; i < localDevices.Length; i++)
+            for(int i = 0; i < clients.Length; i++)
             {
                 uint[] packetSamples = new uint[60];
                 foreach(PacketInfo packet in packets)
                 {
-                    if(packet.SourceMAC == localDevices[i].MACAddress || packet.DestMAC == localDevices[i].MACAddress)
+                    if(packet.SourceMAC == clients[i].MacAddress || packet.DestMAC == clients[i].MacAddress)
                     {
                         packetSamples[(DateTime.Now - packet.Time).Seconds]++;
                     }
