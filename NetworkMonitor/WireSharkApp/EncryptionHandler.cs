@@ -10,6 +10,14 @@ namespace WiresharkApp {
 		static int[] schedule;
 		static bool keySet = false;
 
+		public static void SetKey() {
+			if (keySet) {
+				return;
+			}
+			string randomKey = RandomString (15);
+			SetKey(randomKey);
+		}
+
 		public static void SetKey(string key) {
 			if (keySet) {
 				//can't set the key more than once
@@ -45,7 +53,7 @@ namespace WiresharkApp {
 		public static void Test() {
 			string key = "key";
 			string text = "Plaintext";
-			SetKey(key);
+			SetKey();
 			string ciphertext = Encrypt(text);
 			Console.WriteLine(ciphertext);
 			Console.WriteLine(Decrypt(ciphertext));
@@ -83,6 +91,21 @@ namespace WiresharkApp {
 			}).ToArray();
 
 			return result;
+		}
+
+		private static string RandomString(int length)
+		{
+			Random r = new Random();
+			const string pool = "abcdefghijklmnopqrstuvwxyz0123456789";
+			var builder = new StringBuilder();
+
+			for (var i = 0; i < length; i++)
+			{
+				var c = pool[r.Next(0, pool.Length)];
+				builder.Append(c);
+			}
+
+			return builder.ToString();
 		}
 	}
 }
