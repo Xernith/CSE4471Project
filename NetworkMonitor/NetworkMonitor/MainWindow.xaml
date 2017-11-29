@@ -84,11 +84,6 @@
                     <Button Name="refreshLiveFeed" Content="Refresh" Height="32" Width="32" HorizontalAlignment="Left" VerticalContentAlignment="Center" VerticalAlignment="Top" FontSize="8"/>
                 </Grid>
             </TabItem>
-            <TabItem Header="Remote Addresses">
-                <Grid>
-                    <TextBlock TextWrapping="Wrap" Text="Remote Addresses" FontSize="24" Margin="0" VerticalAlignment="Top" HorizontalAlignment="Center" Width="298" Height="33" TextAlignment="Center"/>
-                </Grid>
-            </TabItem>
             <TabItem Header="Notification Settings">
                 <Grid>
                     <Grid.ColumnDefinitions>
