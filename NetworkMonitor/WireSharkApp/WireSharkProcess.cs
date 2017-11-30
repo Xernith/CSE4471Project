@@ -59,6 +59,7 @@ namespace WiresharkApp
             {
                 //get most recently written file
                 //got this code block from https://stackoverflow.com/questions/1179970/how-to-find-the-most-recent-file-in-a-directory-using-net-and-without-looping
+                //but changed it considerably
                 try
                 {
                     var currentFile = (from file in directory.GetFiles() orderby file.LastWriteTime descending select file).ElementAt(2);
